@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using NewAuthCustomAccountTestEnv.Data;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Game" ;
+}
+
+<h1>game </h1>
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <h1>log opnieuw in!</h1>
+} else {
+    var user = await UserManager.GetUserAsync(User);
+    <!-- Form for submitting the coin-up request -->
+    <form method="post" asp-controller="Game" asp-action="CoinUp">
+        <!-- Hidden input for the username -->
+        <input type="hidden" name="username" value="@user.UserName" />
+        <!-- Submit button -->
+        <button type="submit">Coin Up</button>
+    </form>
+
+    <!-- Container for displaying the result of the coin-up request -->
+    <div id="coinUpResult">
+        <!-- Partial view to be rendered when the coin-up request is successful -->
+    @await Html.PartialAsync("_CoinUpSuccess")
+    </div>
+}

@@ -1,0 +1,52 @@
+﻿
+
+@model IEnumerable<NewAuthCustomAccountTestEnv.Models.LeaderboardModel>
+
+
+@{
+    ViewData["Title"] = "LeaderBoard";
+}
+
+<h1>not you</h1>
+
+<p>
+   
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                nr.
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaderboardUserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coins)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+
+            
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeaderboardUserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Coins)
+                    </td>
+                    
+                </tr>
+            }
+        }
+    </tbody>
+</table>
