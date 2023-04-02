@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNet.SignalR.Client;
+using Microsoft.AspNetCore.Mvc;
 using NewAuthCustomAccountTestEnv.Models;
 using System.Diagnostics;
 
