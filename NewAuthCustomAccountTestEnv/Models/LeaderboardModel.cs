@@ -1,4 +1,6 @@
-﻿namespace NewAuthCustomAccountTestEnv.Models
+﻿using System.ComponentModel;
+
+namespace NewAuthCustomAccountTestEnv.Models
 {
     public class LeaderboardModel
     {
@@ -11,7 +13,7 @@
             get { return _position; }
             set { _position = value; }
         }
-
+        [DisplayName("User")]
         public string LeaderboardUserName
         {
             get { return _leaderboardUserName; }

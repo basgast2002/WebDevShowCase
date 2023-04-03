@@ -8,17 +8,11 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.CodeAnalysis;
-using Microsoft.Data.SqlClient;
-using Microsoft.Data.Sqlite;
 using NewAuthCustomAccountTestEnv.Data;
-using NuGet.Common;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Encodings.Web;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
 {
@@ -74,8 +68,10 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "UserName")]
             public string UserName
-            { get;
-                set; }
+            {
+                get;
+                set;
+            }
 
             [Required]
             [Display(Name = "Name")]
@@ -86,7 +82,6 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -131,12 +126,12 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
                 {
                     throw new Exception("er is iets fout gegaan!");
                 }
-                var user = new ApplicationUser {Email = Input.Email, Name = Input.Name, UserName = Input.UserName };//CreateUser();
+                var user = new ApplicationUser { Email = Input.Email, Name = Input.Name, UserName = Input.UserName };//CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
-                
+
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -197,7 +192,5 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
-
-       
     }
 }

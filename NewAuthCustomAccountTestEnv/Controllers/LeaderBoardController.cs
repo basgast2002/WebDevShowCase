@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNet.SignalR.Client;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using NewAuthCustomAccountTestEnv.Models;
 
@@ -12,9 +13,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         {
             return View(Create());
         }
-
-       
-
+        
         private List<LeaderboardModel> Create()
         {
             List<LeaderboardModel> ImportedUsers = new List<LeaderboardModel>();

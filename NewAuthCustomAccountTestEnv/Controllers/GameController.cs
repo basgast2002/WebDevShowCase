@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Framework;
 using Microsoft.Data.Sqlite;
-using NewAuthCustomAccountTestEnv.Data;
-using System;
+using NewAuthCustomAccountTestEnv.Hubs;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
 using RequiredAttribute = Microsoft.Build.Framework.RequiredAttribute;
 
 namespace NewAuthCustomAccountTestEnv.Controllers
@@ -12,17 +9,19 @@ namespace NewAuthCustomAccountTestEnv.Controllers
     public class GameController : Controller
     {
         private readonly SqliteConnection DatabaseConnection = new("Datasource= AuthDb.db");
+
         [BindProperty]
-        public InputModel Input { get; set; }
+        private InputModel? Input { get; set; }
+
         public string? Username { get; set; }
+
         public IActionResult Game()
         {
             return View();
         }
 
-
         [HttpPost]
-        public IActionResult CoinUp(string Username)
+        public async Task<IActionResult> CoinUp(string Username)
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -38,7 +37,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             try
             {
                 DbUp(Username);
-                return PartialView("Game"); // Return a 200 OK response if the update was successful
+                return View("Game"); 
             }
             catch (Exception ex)
             {
@@ -52,10 +51,10 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             IActionResult statuscode;
             try
             {
-                
                 // Query parameters.
                 int Newcoins = GetCoins(Username);
-                if (Newcoins < 0) {
+                if (Newcoins < 0)
+                {
                     throw new Exception("Invalid Operation!");
                 }
                 DatabaseConnection.Open();
@@ -70,21 +69,15 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 // Execute SQL.
                 sqliteUpdate.ExecuteNonQuery();
                 statuscode = Ok();
-
             }
             catch (Exception e)
             {
-
-                
                 statuscode = BadRequest();
-
             }
             finally
             {
-
                 // Close the database connection.
                 DatabaseConnection.Close();
-                
             }
             return statuscode;
         }
@@ -97,7 +90,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 DatabaseConnection.Open();
 
                 SqliteCommand sqliteGet = new("SELECT coins FROM AspNetUsers WHERE UserName = $username ;", DatabaseConnection);
-                
+
                 sqliteGet.Parameters.AddWithValue("$username", Username);
 
                 // Execute SQL.
@@ -105,11 +98,9 @@ namespace NewAuthCustomAccountTestEnv.Controllers
 
                 SqliteDataReader r = sqliteGet.ExecuteReader();
                 r.Read();
-               var test = r.GetValue(0);
-                     coins = int.Parse(r.GetInt64(0).ToString());
-                
+                var test = r.GetValue(0);
+                coins = int.Parse(r.GetInt64(0).ToString());
             }
-
             catch (Exception e)
             {
                 throw new Exception(e.Message);
@@ -119,11 +110,10 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 DatabaseConnection.Close();
             }
             return coins + 1;
-
-            
-
         }
-        public class InputModel
+
+
+        private class InputModel
         {
             [Required]
             [Display(Name = "UserName")]
@@ -131,7 +121,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             {
                 get;
                 set;
-            }
+            } = string.Empty;
         }
     }
 }

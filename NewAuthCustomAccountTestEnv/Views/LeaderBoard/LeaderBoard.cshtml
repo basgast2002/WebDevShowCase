@@ -1,17 +1,15 @@
 ﻿
-
 @model IEnumerable<NewAuthCustomAccountTestEnv.Models.LeaderboardModel>
-
-
 @{
     ViewData["Title"] = "LeaderBoard";
 }
 
-<h1>not you</h1>
+    
+<script src="~/js/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
+<script src="~/js/LeaderBoard.js" asp-append-version="true"></script>
 
-<p>
-   
-</p>
+<label id="latest-update-label" >latest sync:</label>
+
 <table class="table">
     <thead>
         <tr>
@@ -50,3 +48,5 @@
         }
     </tbody>
 </table>
+
+
