@@ -11,8 +11,8 @@ using NewAuthCustomAccountTestEnv.Data;
 namespace NewAuthCustomAccountTestEnv.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230329133817_edituserlogininfo")]
-    partial class edituserlogininfo
+    [Migration("20230403103915_AdminUpdate")]
+    partial class AdminUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,6 +173,9 @@ namespace NewAuthCustomAccountTestEnv.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsAdmin")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("LockoutEnabled")

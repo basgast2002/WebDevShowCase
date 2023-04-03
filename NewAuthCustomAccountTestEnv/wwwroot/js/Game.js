@@ -1,7 +1,4 @@
-﻿
-
-
-const connection = new signalR.HubConnectionBuilder().withUrl("/LeaderBoardNotifyHub").build();
+﻿const connection = new signalR.HubConnectionBuilder().withUrl("/LeaderBoardNotifyHub").build();
 connection.start()
     .then(function () {
         console.log("Connection started");
@@ -11,19 +8,11 @@ connection.start()
     });
 
 document.getElementById("submitbutton").addEventListener("click", function (event) {
-    
-    
     connection.invoke("UpdateConnectedLeaderboard").catch(function (err) {
         return console.error(err.toString());
     });
     console.log("button pressed!")
 });
-
-
-
-
-
-
 
 /*
 const GameModule = (function () {
@@ -68,5 +57,5 @@ const GameModule = (function () {
     }
 })();
 
-GameMod.init(); 
+GameMod.init();
 */

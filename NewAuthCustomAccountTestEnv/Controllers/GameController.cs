@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
-using NewAuthCustomAccountTestEnv.Hubs;
 using System.ComponentModel.DataAnnotations;
 using RequiredAttribute = Microsoft.Build.Framework.RequiredAttribute;
 
@@ -37,7 +36,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             try
             {
                 DbUp(Username);
-                return View("Game"); 
+                return View("Game");
             }
             catch (Exception ex)
             {
@@ -111,7 +110,6 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             }
             return coins + 1;
         }
-
 
         private class InputModel
         {

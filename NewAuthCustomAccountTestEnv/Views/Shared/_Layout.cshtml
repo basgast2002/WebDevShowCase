@@ -33,6 +33,10 @@
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            @if (UserManager.GetUserAsync(User).Result.IsAdmin)
+                            {
+                                <a class="btn btn-primary" asp-page="/Admin/Users/Index">Manage Users</a>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Identity" asp-controller="LeaderBoard" asp-action="LeaderBoard">LeaderBoard</a>
                             </li>
