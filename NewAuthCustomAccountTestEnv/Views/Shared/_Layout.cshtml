@@ -35,7 +35,7 @@
                         {
                             @if (UserManager.GetUserAsync(User).Result.IsAdmin)
                             {
-                                <a class="btn btn-primary" asp-page="/Admin/Users/Index">Manage Users</a>
+                                <a class="btn btn-primary" asp-area="Identity" asp-action="UserManagementIndex" asp-controller="AdminUser">Manage Users</a>
                             }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Identity" asp-controller="LeaderBoard" asp-action="LeaderBoard">LeaderBoard</a>

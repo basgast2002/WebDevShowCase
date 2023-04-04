@@ -112,17 +112,18 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-
+                    /**/
                     if (_userManager.FindByNameAsync(Input.Username).Result.IsAdmin)
                     {
-                        User.Claims.Append(new Claim(ClaimTypes.Role, "admin"));
+                        var adminclaim = new Claim(ClaimTypes.Role, "Admin");
+                       await _userManager.AddClaimAsync((ApplicationUser)_userManager.FindByNameAsync(Input.Username).Result, adminclaim);
                     }
-
+                    
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {

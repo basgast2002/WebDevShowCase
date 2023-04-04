@@ -12,15 +12,21 @@
 {
     <h1>log opnieuw in!</h1>
 } else {
-    var user = await UserManager.GetUserAsync(User);
-   
+    ApplicationUser? user = null;
+    if(User != null){
+
+    
+    user = await UserManager.GetUserAsync(User);
+    }
+   if (user != null){
     <form method="post" asp-controller="Game" asp-action="CoinUp">
        
         <input type="hidden" name="username" value="@user.UserName" />
         
-        <button id="submitbutton" type="submit" value="Coin Up"/>
+        <button id="submitbutton" type="submit" value="Coin Up"><img src="~/Images/pirate-ship.png" alt="sail"></img></button>
     </form>
         <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
         <script src="~/js/Game.js"></script>
-
+        
+   }
 }

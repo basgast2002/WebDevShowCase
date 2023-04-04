@@ -15,7 +15,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
 
         private List<LeaderboardModel> Create()
         {
-            List<LeaderboardModel> ImportedUsers = new List<LeaderboardModel>();
+            List<LeaderboardModel> ImportedUsers = new();
             int Position = 0;
             DatabaseConnection.Open();
             using (SqliteCommand fmd = DatabaseConnection.CreateCommand())
