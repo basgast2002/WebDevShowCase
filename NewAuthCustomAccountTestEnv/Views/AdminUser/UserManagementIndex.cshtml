@@ -6,9 +6,9 @@
 
 <h1>UserManagementIndex</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h2>
+    Voelt goed he? Macht.
+</h2>
 <table class="table">
     <thead>
         <tr>
@@ -55,17 +55,29 @@
                 @Html.DisplayFor(modelItem => item.Failedloginattempts)
             </td>
             <td>
-                <!--
+                
                     <form method="post" asp-controller="AdminUser" asp-action="UserManagerEdit">
 
                         <input type="hidden" name="id" value="@item.Id" />
 
                         <button id="submitbutton" type="submit" >edit</button>
                     </form>
-                    -->
-                    <a method= "post" asp-action="UserManagerEdit" asp-controller="AdminUser" data="@item.Id" >Edit</a> | 
-                    <a asp-action="Details" asp-area="Identity/Admin/Users" asp-controller="AdminUser" asp-route-id="@item.Username">Details</a> |
-                    <a asp-action="Delete" asp-area="Identity/Admin/Users" asp-controller="AdminUser" asp-route-id="@item.Username">Delete</a>
+
+                    
+                    |
+                    <form method="post" asp-controller="AdminUser" asp-action="UserManagerDetails">
+
+                        <input type="hidden" name="id" value="@item.Id" />
+
+                        <button id="submitbutton" type="submit">Details</button>
+                    </form>
+                     |
+                    <form method="post" asp-controller="AdminUser" asp-action="UserManagerDelete">
+
+                        <input type="hidden" name="id" value="@item.Id" />
+
+                        <button id="submitbutton" type="submit">Delete</button>
+                    </form>
             </td>
         </tr>
 }
