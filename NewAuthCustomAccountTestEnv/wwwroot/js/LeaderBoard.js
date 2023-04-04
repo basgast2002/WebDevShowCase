@@ -1,13 +1,8 @@
-﻿
-
-const connection = new signalR.HubConnectionBuilder().withUrl("/LeaderBoardNotifyHub").build();
+﻿const connection = new signalR.HubConnectionBuilder().withUrl("/LeaderBoardNotifyHub").build();
 
 connection.on("UpdateLeaderBoard", function () {
-    
     //console.log("iets ontvangen tenminste");
     window.location.reload();
-    
-    
 });
 
 connection.start()
@@ -20,6 +15,4 @@ connection.start()
     .catch(function (err) {
         //wanneer connectie faalt: log de error op console
         console.error(err.toString());
-
     });
-

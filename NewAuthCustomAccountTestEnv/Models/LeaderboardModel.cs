@@ -13,6 +13,7 @@ namespace NewAuthCustomAccountTestEnv.Models
             get { return _position; }
             set { _position = value; }
         }
+
         [DisplayName("User")]
         public string LeaderboardUserName
         {

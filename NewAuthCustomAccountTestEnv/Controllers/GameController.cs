@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
-using NewAuthCustomAccountTestEnv.Hubs;
 using System.ComponentModel.DataAnnotations;
 using RequiredAttribute = Microsoft.Build.Framework.RequiredAttribute;
 
@@ -10,8 +9,6 @@ namespace NewAuthCustomAccountTestEnv.Controllers
     {
         private readonly SqliteConnection DatabaseConnection = new("Datasource= AuthDb.db");
 
-        [BindProperty]
-        private InputModel? Input { get; set; }
 
         public string? Username { get; set; }
 
@@ -23,7 +20,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         [HttpPost]
         public async Task<IActionResult> CoinUp(string Username)
         {
-            if (string.IsNullOrEmpty(Username))
+            if (string.IsNullOrEmpty(Username) || User.Identity is null)
             {
                 ModelState.AddModelError(nameof(InputModel.UserName), "Username cannot be null or empty.");
                 return BadRequest(ModelState);
@@ -36,8 +33,11 @@ namespace NewAuthCustomAccountTestEnv.Controllers
 
             try
             {
-                DbUp(Username);
-                return View("Game"); 
+                await Task.Run(() => { 
+                DbUp(Username); 
+                });
+                return View("Game");
+               
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             }
             catch (Exception e)
             {
-                statuscode = BadRequest();
+                statuscode = BadRequest(e);
             }
             finally
             {
@@ -111,7 +111,6 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             }
             return coins + 1;
         }
-
 
         private class InputModel
         {
