@@ -2,6 +2,7 @@
 @using NewAuthCustomAccountTestEnv.Data;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@model NewAuthCustomAccountTestEnv.Models.GameModel
 @{
     ViewData["Title"] = "Game" ;
 }
@@ -15,18 +16,31 @@
     ApplicationUser? user = null;
     if(User != null){
 
-    
-    user = await UserManager.GetUserAsync(User);
+
+        user = await UserManager.GetUserAsync(User);
     }
-   if (user != null){
-    <form method="post" asp-controller="Game" asp-action="CoinUp">
-       
-        <input type="hidden" name="username" value="@user.UserName" />
+    if (user != null){
+        @if (Model != null)
+        {
+            <div>
+                <image src="@Model.Image1"></image>
+            </div><div>
+                <image src="@Model.Image2"></image>
+            </div><div>
+                <image src="@Model.Image3"></image>
+            </div>
+
+        }
         
-        <button id="submitbutton" type="submit" value="Coin Up"><img src="~/Images/pirate-ship.png" alt="sail"></img></button>
+
+    <form id="gameform"method="post" asp-controller="Game" asp-action="CoinUp">
+       
+        <input id="username" type="hidden" name="username" value="@user.UserName"/>
+        
+        <button id="submitbutton" type="submit" value="Coin Up"><img src="~/Images/pirate-ship.png" alt="sail"/></button>
     </form>
-        <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
-        <script src="~/js/Game.js"></script>
+        <script src="~/js/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
+        
         
    }
 }

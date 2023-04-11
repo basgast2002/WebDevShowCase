@@ -15,6 +15,47 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\Game\Images\chicken-leg.png" />
+    <None Remove="Views\Game\Images\Cursed_Coins_Curse.png" />
+    <None Remove="Views\Game\Images\Cursed_Coins_Gem.png" />
+    <None Remove="Views\Game\Images\dollar.png" />
+    <None Remove="Views\Game\Images\fish.png" />
+    <None Remove="Views\Game\Images\pirate-ship.png" />
+    <None Remove="Views\Game\Images\storm.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\Game\Images\chicken-leg.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Game\Images\Cursed_Coins_Curse.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Game\Images\Cursed_Coins_Gem.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Game\Images\dollar.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Game\Images\fish.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Game\Images\pirate-ship.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Game\Images\storm.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.4" />

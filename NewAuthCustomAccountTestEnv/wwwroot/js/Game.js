@@ -7,55 +7,28 @@ connection.start()
         console.error(err.toString());
     });
 
+var button = document.getElementById("submitbutton");
+
+var UserName = document.getElementById("username").value;
+
 document.getElementById("submitbutton").addEventListener("click", function (event) {
     connection.invoke("UpdateConnectedLeaderboard").catch(function (err) {
         return console.error(err.toString());
     });
-    console.log("button pressed!")
+    event.preventDefault();
 });
 
-/*
-const GameModule = (function () {
-    class Game {
-        constructor() {
-        }
-        ClickButton() {
-            const coinUpForm = document.getElementById('coin-up-form');
+document.getElementById("submitbutton").addEventListener(onclick, function (event) {
+    console.log("button pressed!");
 
-            coinUpForm.addEventListener('submit', (event) => {
-                event.preventDefault();
+    const xhr = new XMLHttpRequest();
+    const url = 'Game/CoinUp';
+    const data = { username: UserName }
+    const payload = JSON.stringify(data);
 
-                const username = document.getElementById('username').value;
-
-                fetch('/Game/CoinUp', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(username)
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Coins updated successfully.');
-                        } else {
-                            throw new Error('Failed to update coins.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            });
-        }
-    }
-
-    const GameMod = new Game();
-
-    return {
-        init: function () {
-            GameMod.ClickButton();
-        }
-    }
-})();
-
-GameMod.init();
-*/
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function () {
+    };
+    xhr.send();
+});
