@@ -6,29 +6,20 @@ connection.start()
     .catch(function (err) {
         console.error(err.toString());
     });
-
 var button = document.getElementById("submitbutton");
-
-var UserName = document.getElementById("username").value;
-
-document.getElementById("submitbutton").addEventListener("click", function (event) {
+button.addEventListener("click", function (event) {
     connection.invoke("UpdateConnectedLeaderboard").catch(function (err) {
         return console.error(err.toString());
     });
-    event.preventDefault();
+    console.log("button pressed");
 });
+function timeout() {
+    button.disabled = true;
+    setTimeout(function () {
+        button.disabled = false;
+    }, 2000);
+}
 
-document.getElementById("submitbutton").addEventListener(onclick, function (event) {
-    console.log("button pressed!");
+var UserName = document.getElementById("username").value;
 
-    const xhr = new XMLHttpRequest();
-    const url = 'Game/CoinUp';
-    const data = { username: UserName }
-    const payload = JSON.stringify(data);
-
-    xhr.open('POST', url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function () {
-    };
-    xhr.send();
-});
+button.onload = timeout(button);

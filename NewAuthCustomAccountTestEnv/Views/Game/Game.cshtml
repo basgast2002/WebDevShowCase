@@ -22,25 +22,34 @@
     if (user != null){
         @if (Model != null)
         {
-            <div>
+            <link rel="stylesheet" href="~/css/Game.css" asp-append-version="true" />
+            <div class="game-container">
+                <div class="door-container">
+            <div class="door">
                 <image src="@Model.Image1"></image>
-            </div><div>
+            </div>
+            <div class="door">
                 <image src="@Model.Image2"></image>
-            </div><div>
+            </div>
+            <div class="door">
                 <image src="@Model.Image3"></image>
             </div>
-
+                </div>
+        </div>
+            
         }
         
 
     <form id="gameform"method="post" asp-controller="Game" asp-action="CoinUp">
        
         <input id="username" type="hidden" name="username" value="@user.UserName"/>
-        
-        <button id="submitbutton" type="submit" value="Coin Up"><img src="~/Images/pirate-ship.png" alt="sail"/></button>
+
+            <button id="submitbutton" type="submit" value="Coin Up"><img src="~/Images/pirate-ship.png" alt="sail" /></button>
     </form>
         <script src="~/js/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
-        
+        <script src="~/js/Game.js" asp-append-version="true"></script>
+        <script src="~/js/GameAnimation.js" asp-append-version="true"></script>
         
    }
+   
 }
