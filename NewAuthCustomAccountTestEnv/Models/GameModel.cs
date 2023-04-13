@@ -2,7 +2,7 @@
 {
     public class GameModel
     {
-        private string _default = "Images\\storm.png";
+        private string _default = "/Images/storm.png";
         public string Image1 { get; set; }
         public string Image2 { get; set; }
         public string Image3 { get; set; }

@@ -7,8 +7,7 @@
     ViewData["Title"] = "Game" ;
 }
 
-<h1>game </h1>
-
+<link rel="stylesheet" href="~/css/Game.css" asp-append-version="true" />
 @if (!SignInManager.IsSignedIn(User))
 {
     <h1>log opnieuw in!</h1>
@@ -22,22 +21,120 @@
     if (user != null){
         @if (Model != null)
         {
-            <link rel="stylesheet" href="~/css/Game.css" asp-append-version="true" />
+            if (Model.CoinsEarned <= 199 && Model.CoinsEarned > 0)
+            {
+                <div id="payoutbanner" class="coinsearnedbanner"><h1>Je hebt: @Model.CoinsEarned <img src="~/Images/dollar.png"/> verdiend!</h1></div>
+            }
+            else if ( Model.CoinsEarned > 0)
+            {
+                <div id="payoutbanner" class="coinsearnedbanner"><h1>JACKPOT: @Model.CoinsEarned <img src="~/Images/Cursed_Coins_Gem.png" />!</h1></div>
+
+            }
+            else
+            {
+                <div id="payoutbanner" class="coinsearnedbanner"></div>
+            }
+            
             <div class="game-container">
                 <div class="door-container">
             <div class="door">
-                <image src="@Model.Image1"></image>
+                        <div class="scroller" id="scroller1">
+                            <span>
+                                <img src="~/Images/dollar.png"/> <br/>
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <img src="~/Images/dollar.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <img src="~/Images/dollar.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <image src="@Model.Image1"></image>
+                            </span>
+                        </div>
+                        <image id="result1" class="doorresult" src="@Model.Image1"></image>
+                    
+                    
             </div>
             <div class="door">
-                <image src="@Model.Image2"></image>
+                        <div class="scroller" id="scroller2">
+                            <span>
+                                <img src="~/Images/dollar.png" /> <br />
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <img src="~/Images/dollar.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <img src="~/Images/dollar.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <image src="@Model.Image2"></image>
+                            </span>
+                        </div>
+                        <image id="result2" class="doorresult" src="@Model.Image2"></image>
+                    
             </div>
             <div class="door">
-                <image src="@Model.Image3"></image>
+                        <div class="scroller" id="scroller3">
+                            <span>
+                                <img src="~/Images/dollar.png" /> <br />
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <img src="~/Images/dollar.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <img src="~/Images/dollar.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Curse.png" /><br />
+                                <img src="~/Images/chicken-leg.png" /><br />
+                                <img src="~/Images/Cursed_Coins_Gem.png" /><br />
+                                <img src="~/Images/storm.png" /><br />
+                                <img src="~/Images/fish.png" /><br />
+                                <img src="~/Images/pirate-ship.png" /><br />
+                                <image src="@Model.Image3"></image>
+                            </span>
+                        </div>
+                        <image class="doorresult" id="result3" src="@Model.Image3"></image>
+                    
             </div>
                 </div>
         </div>
-            
-        }
+          
+        
         
 
     <form id="gameform"method="post" asp-controller="Game" asp-action="CoinUp">
@@ -48,8 +145,8 @@
     </form>
         <script src="~/js/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
         <script src="~/js/Game.js" asp-append-version="true"></script>
-        <script src="~/js/GameAnimation.js" asp-append-version="true"></script>
         
+        }  
    }
    
 }

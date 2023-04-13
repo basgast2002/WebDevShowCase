@@ -23,3 +23,19 @@ function timeout() {
 var UserName = document.getElementById("username").value;
 
 button.onload = timeout(button);
+
+var slideBox1 = document.getElementById('scroller1');
+var slideBox2 = document.getElementById('scroller2');
+var slideBox3 = document.getElementById('scroller3');
+
+setTimeout(function () {
+    slideBox1.style.display = 'none';
+    slideBox2.style.display = 'none';
+    slideBox3.style.display = 'none';
+
+    document.getElementById("result1").style.display = "block";
+    document.getElementById("result2").style.display = "block";
+    document.getElementById("result3").style.display = 'block';
+
+    document.getElementById("payoutbanner").style.display = 'flex';
+}, 5000);

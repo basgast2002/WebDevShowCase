@@ -17,6 +17,11 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private GameModel _gameValues;
 
+        private string[] _images = {
+            "/Images/Cursed_Coins_Gem.png", "/Images/pirate-ship.png", "/Images/Cursed_Coins_Curse.png",
+            "/Images/storm.png", "/Images/fish.png", "/Images/chicken-leg.png",
+            "/Images/dollar.png" };
+
         public GameController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
@@ -27,7 +32,8 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         {
             if (_gameValues is null)
             {
-                return View("Game");
+                GameModel TempGameModel = new(_images[2], _images[2], _images[2], 0);
+                return View("Game", TempGameModel);
             }
             return View("Game", this._gameValues);
         }
@@ -140,7 +146,60 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             string temp2 = GetImage();
             string temp3 = GetImage();
 
-            return new GameModel(temp1, temp2, temp3, 0);
+            int tempi = CalculatePayout(temp1, temp2, temp3);
+
+            return new GameModel(temp1, temp2, temp3, tempi);
+        }
+
+        public int CalculatePayout(string img1, string img2, string img3)
+        {
+            int payout = 0;
+            if (img1 == _images[6])
+            {
+                payout++;
+            }
+            if (img2 == _images[6])
+            {
+                payout++;
+            }
+            if (img3 == _images[6])
+            {
+                payout++;
+            }
+
+            if (img1 == img2 && img2 == img3 && img3 == img1)
+            {
+                if (img1 == _images[0])
+                {
+                    payout += 200;
+                }
+                if (img1 == _images[1])
+                {
+                    payout += -20;
+                }
+                if (img1 == _images[2])
+                {
+                    payout += -_userManager.GetUserAsync(User).Result.Coins;
+                }
+                if (img1 == _images[3])
+                {
+                    payout += 0;
+                }
+                if (img1 == _images[4])
+                {
+                    payout += 10;
+                }
+                if (img1 == _images[5])
+                {
+                    payout += 10;
+                }
+                if (img1 == _images[6])
+                {
+                    payout += 2;
+                }
+            }
+
+            return payout;
         }
 
         public string GetImage()
@@ -154,31 +213,41 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             }
             int randomNumber = BitConverter.ToInt32(randomBytes, 0);
             int result = (int)(Math.Abs(randomNumber) % (maxValue - minValue)) + minValue;
-            string[] images = { "/Images/Cursed_Coins_Gem.png", "/Images/pirate-ship.png", "/Images/Cursed_Coins_Curse.png", "/Images/storm.png", "/Images/fish.png", "/Images/chicken-leg.png", "/Images/dollar.png" };
-            switch (result)
+            if (result < 0 || result > 115)
             {
-                case <= 5:
-                    return images[0];
-
-                case > 5 and <= 18:
-                    return images[1];
-
-                case > 18 and <= 29:
-                    return images[2];
-
-                case > 29 and <= 40:
-                    return images[3];
-
-                case > 40 and <= 60:
-                    return images[4];
-
-                case > 60 and <= 100:
-                    return images[5];
-
-                case > 100 and <= 115:
-                    return images[6];
+                //chance values contaminated
+                _userManager.GetUserAsync(User).Result.AccessFailedCount++;
+                _userManager.GetUserAsync(User).Result.Coins = 1;
+                _signInManager.SignOutAsync();
+                throw new Exception("nie best, log op nieuw in");
             }
-            return "400";
+            else
+            {
+                switch (result)
+                {
+                    case <= 5:
+                        return _images[0];
+
+                    case > 5 and <= 18:
+                        return _images[1];
+
+                    case > 18 and <= 29:
+                        return _images[2];
+
+                    case > 29 and <= 40:
+                        return _images[3];
+
+                    case > 40 and <= 60:
+                        return _images[4];
+
+                    case > 60 and <= 100:
+                        return _images[5];
+
+                    case > 100 and <= 115:
+                        return _images[6];
+                }
+            }
+            return "404 - image not found";
         }
 
         private class InputModel
