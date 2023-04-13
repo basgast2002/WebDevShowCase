@@ -15,9 +15,9 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         private readonly SqliteConnection _databaseConnection = new("Datasource= AuthDb.db");
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private GameModel _gameValues;
+        private GameModel? _gameValues;
 
-        private string[] _images = {
+        private readonly string[] _images = {
             "/Images/Cursed_Coins_Gem.png", "/Images/pirate-ship.png", "/Images/Cursed_Coins_Curse.png",
             "/Images/storm.png", "/Images/fish.png", "/Images/chicken-leg.png",
             "/Images/dollar.png" };
@@ -62,12 +62,16 @@ namespace NewAuthCustomAccountTestEnv.Controllers
 
             try
             {
-                this._gameValues = GetGameValues();
-                DbUp(user.UserName, this._gameValues.CoinsEarned);
-
-                return Game();
-
-                //return Ok();
+                if (user != null)
+                {
+                    this._gameValues = GetGameValues();
+                    if (user.UserName != null)
+                    {
+                        DbUp(user.UserName, this._gameValues.CoinsEarned);
+                    }
+                    return Game();
+                }
+                throw new UnauthorizedAccessException();
             }
             catch (Exception ex)
             {
@@ -179,7 +183,14 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 }
                 if (img1 == _images[2])
                 {
-                    payout += -_userManager.GetUserAsync(User).Result.Coins;
+                    if (_userManager.GetUserAsync(User).Result != null)
+                    {
+                        payout += -_userManager.GetUserAsync(User).Result.Coins;
+                    }
+                    else
+                    {
+                        payout = -200;
+                    }
                 }
                 if (img1 == _images[3])
                 {
@@ -206,18 +217,17 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         {
             int minValue = 0;
             int maxValue = 115;
-            byte[] randomBytes = new byte[4]; // choose the number of bytes you want
-            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(randomBytes);
-            }
-            int randomNumber = BitConverter.ToInt32(randomBytes, 0);
+            int randomNumber = RandomNumberGenerator.GetInt32(minValue, maxValue);
+
             int result = (int)(Math.Abs(randomNumber) % (maxValue - minValue)) + minValue;
             if (result < 0 || result > 115)
             {
                 //chance values contaminated
-                _userManager.GetUserAsync(User).Result.AccessFailedCount++;
-                _userManager.GetUserAsync(User).Result.Coins = 1;
+                if (_userManager.GetUserAsync(User).Result != null)
+                {
+                    _userManager.GetUserAsync(User).Result.AccessFailedCount++;
+                    _userManager.GetUserAsync(User).Result.Coins = 1;
+                }
                 _signInManager.SignOutAsync();
                 throw new Exception("nie best, log op nieuw in");
             }

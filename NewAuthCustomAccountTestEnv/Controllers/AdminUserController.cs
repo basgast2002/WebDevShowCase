@@ -24,6 +24,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             UserModel selecteduser = GetUserById(id);
             return View(selecteduser);
         }
+
         [HttpPost]
         public IActionResult UserManagerDetails(string id)
         {
@@ -35,6 +36,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             UserModel selecteduser = GetUserById(id);
             return View(selecteduser);
         }
+
         [HttpPost]
         public IActionResult UserManagerDelete(string id)
         {
@@ -64,10 +66,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 fmd.Parameters.AddWithValue("$afc", user.Failedloginattempts);
                 fmd.Parameters.AddWithValue("$email", user.Email);
 
-
                 var testvar = fmd.ExecuteNonQuery();
-
-
 
                 DatabaseConnection.Close();
             }
@@ -83,23 +82,16 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             {
                 fmd.CommandText = @"DELETE FROM AspNetUsers WHERE Id = $id AND Name = $name AND Email = $email;";
 
-
                 fmd.Parameters.AddWithValue("$name", name);
                 fmd.Parameters.AddWithValue("$id", Id);
                 fmd.Parameters.AddWithValue("$email", email);
 
-
                 var testvar = fmd.ExecuteNonQuery();
-
-
 
                 DatabaseConnection.Close();
             }
             return UserManagementIndex();
         }
-
-
-
 
         private bool ValidateId(string id)
         {
@@ -108,9 +100,9 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 return false;
             }
 
-
             return true;
         }
+
         private UserModel GetUserById(string id)
         {
             return ImportUsers().FirstOrDefault(a => a.Id == id) ?? new(id, "", "", "", 0, false, 0);

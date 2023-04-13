@@ -114,9 +114,11 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
 
                     if (_userManager.FindByNameAsync(Input.Username).Result.IsAdmin)
                     {
-                        if (!_userManager.GetClaimsAsync((ApplicationUser)_userManager.FindByNameAsync(Input.Username).Result).Result.Contains(adminclaim))
+                        if (!_userManager.GetClaimsAsync(_userManager.FindByNameAsync(Input.Username).Result).Result.Contains(adminclaim))
                         {
-                            await _userManager.AddClaimAsync((ApplicationUser)_userManager.FindByNameAsync(Input.Username).Result, adminclaim);
+                            var userclaims = _userManager.GetClaimsAsync(_userManager.FindByNameAsync(Input.Username).Result).Result;
+                            await _userManager.RemoveClaimsAsync(_userManager.FindByNameAsync(Input.Username).Result, userclaims);
+                            await _userManager.AddClaimAsync(_userManager.FindByNameAsync(Input.Username).Result, adminclaim);
                         }
                     }
 

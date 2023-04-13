@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using NewAuthCustomAccountTestEnv.Models;
 
 namespace NewAuthCustomAccountTestEnv.Data
 {
@@ -29,7 +28,5 @@ namespace NewAuthCustomAccountTestEnv.Data
         }
 
         public DbSet<NewAuthCustomAccountTestEnv.Models.UserModel> UserModel { get; set; } = default!;
-
-
     }
 }
