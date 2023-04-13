@@ -2,11 +2,13 @@
 {
     public class GameModel
     {
-        private string _default = "/Images/storm.png";
-        public string Image1 { get; set; }
-        public string Image2 { get; set; }
-        public string Image3 { get; set; }
-        public int CoinsEarned { get; set; }
+        #region Fields
+
+        private readonly string _default = "/Images/Cursed-Coins-Curse.png";
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public GameModel(string image1, string image2, string image3, int coinsEarned)
         {
@@ -15,5 +17,16 @@
             Image3 = image3 ?? _default;
             CoinsEarned = coinsEarned;
         }
+
+        #endregion Public Constructors
+
+        #region Properties
+
+        public int CoinsEarned { get; set; }
+        public string Image1 { get; set; }
+        public string Image2 { get; set; }
+        public string Image3 { get; set; }
+
+        #endregion Properties
     }
 }

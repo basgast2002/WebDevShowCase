@@ -6,7 +6,13 @@ namespace NewAuthCustomAccountTestEnv.Controllers
 {
     public class AdminUserController : Controller
     {
+        #region Fields
+
         private readonly SqliteConnection DatabaseConnection = new("DataSource=AuthDb.db;");
+
+        #endregion Fields
+
+        #region Public Methods
 
         public IActionResult UserManagementIndex()
         {
@@ -14,7 +20,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserManagerEdit(string id)
+        public IActionResult UserManagerDelete(string id)
         {
             if (!ValidateId(id))
             {
@@ -24,6 +30,27 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             UserModel selecteduser = GetUserById(id);
             return View(selecteduser);
         }
+
+        [HttpPost]
+        [HttpDelete]
+        public IActionResult UserManagerDeleteUser(string Id, string name, string email)
+        {
+            DatabaseConnection.Open();
+            using (SqliteCommand fmd = DatabaseConnection.CreateCommand())
+            {
+                fmd.CommandText = @"DELETE FROM AspNetUsers WHERE Id = $id AND Name = $name AND Email = $email;";
+
+                fmd.Parameters.AddWithValue("$name", name);
+                fmd.Parameters.AddWithValue("$id", Id);
+                fmd.Parameters.AddWithValue("$email", email);
+
+                var testvar = fmd.ExecuteNonQuery();
+
+                DatabaseConnection.Close();
+            }
+            return UserManagementIndex();
+        }
+
         [HttpPost]
         public IActionResult UserManagerDetails(string id)
         {
@@ -35,8 +62,9 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             UserModel selecteduser = GetUserById(id);
             return View(selecteduser);
         }
+
         [HttpPost]
-        public IActionResult UserManagerDelete(string id)
+        public IActionResult UserManagerEdit(string id)
         {
             if (!ValidateId(id))
             {
@@ -64,53 +92,28 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 fmd.Parameters.AddWithValue("$afc", user.Failedloginattempts);
                 fmd.Parameters.AddWithValue("$email", user.Email);
 
-
                 var testvar = fmd.ExecuteNonQuery();
-
-
 
                 DatabaseConnection.Close();
             }
             return UserManagementIndex();
         }
 
-        [HttpPost]
-        [HttpDelete]
-        public IActionResult UserManagerDeleteUser(string Id, string name, string email)
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private static bool Istrue(long input)
         {
-            DatabaseConnection.Open();
-            using (SqliteCommand fmd = DatabaseConnection.CreateCommand())
+            bool result = false;
+            switch (input)
             {
-                fmd.CommandText = @"DELETE FROM AspNetUsers WHERE Id = $id AND Name = $name AND Email = $email;";
-
-
-                fmd.Parameters.AddWithValue("$name", name);
-                fmd.Parameters.AddWithValue("$id", Id);
-                fmd.Parameters.AddWithValue("$email", email);
-
-
-                var testvar = fmd.ExecuteNonQuery();
-
-
-
-                DatabaseConnection.Close();
+                case 0: result = false; break;
+                case > 0: result = true; break;
             }
-            return UserManagementIndex();
+            return result;
         }
 
-
-
-
-        private bool ValidateId(string id)
-        {
-            if (ImportUsers() == null || ImportUsers().FirstOrDefault(a => a.Id == id) == null)
-            {
-                return false;
-            }
-
-
-            return true;
-        }
         private UserModel GetUserById(string id)
         {
             return ImportUsers().FirstOrDefault(a => a.Id == id) ?? new(id, "", "", "", 0, false, 0);
@@ -144,15 +147,16 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             return ImportedUsers;
         }
 
-        private static bool Istrue(long input)
+        private bool ValidateId(string id)
         {
-            bool result = false;
-            switch (input)
+            if (ImportUsers() == null || ImportUsers().FirstOrDefault(a => a.Id == id) == null)
             {
-                case 0: result = false; break;
-                case > 0: result = true; break;
+                return false;
             }
-            return result;
+
+            return true;
         }
+
+        #endregion Private Methods
     }
 }

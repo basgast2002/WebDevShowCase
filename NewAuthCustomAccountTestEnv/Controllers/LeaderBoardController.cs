@@ -6,12 +6,22 @@ namespace NewAuthCustomAccountTestEnv.Controllers
 {
     public class LeaderBoardController : Controller
     {
+        #region Fields
+
         private readonly SqliteConnection DatabaseConnection = new("DataSource=AuthDb.db;");
+
+        #endregion Fields
+
+        #region Public Methods
 
         public IActionResult LeaderBoard()
         {
             return View(Create());
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private List<LeaderboardModel> Create()
         {
@@ -35,5 +45,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
 
             return ImportedUsers;
         }
+
+        #endregion Private Methods
     }
 }

@@ -1,14 +1,30 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using NewAuthCustomAccountTestEnv.Models;
 
 namespace NewAuthCustomAccountTestEnv.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        #region Public Constructors
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        #endregion Public Constructors
+
+        #region Properties
+
+        public DbSet<NewAuthCustomAccountTestEnv.Models.UserModel> UserModel { get; set; } = default!;
+
+        #endregion Properties
+
+        #region Protected Methods
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -23,13 +39,6 @@ namespace NewAuthCustomAccountTestEnv.Data
             });
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-        }
-
-        public DbSet<NewAuthCustomAccountTestEnv.Models.UserModel> UserModel { get; set; } = default!;
-
-
+        #endregion Protected Methods
     }
 }
