@@ -10,6 +10,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    builder.AllowAnyMethod()
+    .AllowCredentials()
+    .SetIsOriginAllowed((host) => true)
+    .AllowAnyHeader()
+
+    );
+});
+
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -55,7 +66,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllerRoute(

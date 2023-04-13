@@ -105,20 +105,21 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: true);
 
                 if (result.Succeeded)
                 {
+                    var adminclaim = new Claim(ClaimTypes.Role, "Admin");
                     _logger.LogInformation("User logged in.");
-                    /**/
+
                     if (_userManager.FindByNameAsync(Input.Username).Result.IsAdmin)
                     {
-                        var adminclaim = new Claim(ClaimTypes.Role, "Admin");
-                       await _userManager.AddClaimAsync((ApplicationUser)_userManager.FindByNameAsync(Input.Username).Result, adminclaim);
+                        if (!_userManager.GetClaimsAsync((ApplicationUser)_userManager.FindByNameAsync(Input.Username).Result).Result.Contains(adminclaim))
+                        {
+                            await _userManager.AddClaimAsync((ApplicationUser)_userManager.FindByNameAsync(Input.Username).Result, adminclaim);
+                        }
                     }
-                    
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

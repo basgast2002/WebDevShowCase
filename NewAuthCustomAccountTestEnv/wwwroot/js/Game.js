@@ -6,56 +6,36 @@ connection.start()
     .catch(function (err) {
         console.error(err.toString());
     });
-
-document.getElementById("submitbutton").addEventListener("click", function (event) {
+var button = document.getElementById("submitbutton");
+button.addEventListener("click", function (event) {
     connection.invoke("UpdateConnectedLeaderboard").catch(function (err) {
         return console.error(err.toString());
     });
-    console.log("button pressed!")
+    console.log("button pressed");
 });
+function timeout() {
+    button.disabled = true;
+    setTimeout(function () {
+        button.disabled = false;
+    }, 2000);
+}
 
-/*
-const GameModule = (function () {
-    class Game {
-        constructor() {
-        }
-        ClickButton() {
-            const coinUpForm = document.getElementById('coin-up-form');
+var UserName = document.getElementById("username").value;
 
-            coinUpForm.addEventListener('submit', (event) => {
-                event.preventDefault();
+button.onload = timeout(button);
 
-                const username = document.getElementById('username').value;
+var slideBox1 = document.getElementById('scroller1');
+var slideBox2 = document.getElementById('scroller2');
+var slideBox3 = document.getElementById('scroller3');
 
-                fetch('/Game/CoinUp', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(username)
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Coins updated successfully.');
-                        } else {
-                            throw new Error('Failed to update coins.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            });
-        }
-    }
+setTimeout(function () {
+    slideBox1.style.display = 'none';
+    slideBox2.style.display = 'none';
+    slideBox3.style.display = 'none';
 
-    const GameMod = new Game();
+    document.getElementById("result1").style.display = "block";
+    document.getElementById("result2").style.display = "block";
+    document.getElementById("result3").style.display = 'block';
 
-    return {
-        init: function () {
-            GameMod.ClickButton();
-        }
-    }
-})();
-
-GameMod.init();
-*/
+    document.getElementById("payoutbanner").style.display = 'flex';
+}, 5000);

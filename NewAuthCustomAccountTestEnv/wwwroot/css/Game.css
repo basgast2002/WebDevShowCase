@@ -1,0 +1,102 @@
+﻿.game-container {
+    display: flex;
+}
+
+.door-container {
+    display: flex;
+}
+
+.doorresult {
+    display: none;
+}
+
+.door {
+    background: #ffffff4e;
+    width: 100px;
+    height: 110px;
+    overflow: hidden;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    background: url(/Images/beach-backdrop.png) repeat-x;
+    background-size: 100%;
+    background-size: auto;
+    height: 100%;
+}
+
+.pb-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+html {
+    background-color: #D89F67;
+}
+
+.pb-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 1em 1em 1em 1em;
+    height: 300px;
+}
+
+.boxes {
+    transition: transform 1s ease-in-out;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.coinsearnedbanner {
+    display: none;
+    flex-direction: row;
+    padding: 1em 1em 1em 1em;
+}
+
+/* Animation Section */
+.scroller {
+    height: 2em;
+    position: relative;
+    overflow: hidden;
+    width: 3em;
+}
+
+    .scroller > span {
+        position: absolute;
+        top: 0;
+        animation: slide 5s forwards;
+    }
+
+    .scroller > img {
+        width: 100%
+    }
+
+@keyframes slide {
+    0% {
+        top: 0;
+        opacity: 1;
+    }
+
+    99% {
+        top: -22em;
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+    }
+}
