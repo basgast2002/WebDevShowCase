@@ -6,10 +6,12 @@ namespace NewAuthCustomAccountTestEnv.Data
     [PrimaryKey(nameof(UserName))]
     public class ApplicationUser : IdentityUser
     {
-        public string Name { get; set; }
+        #region Properties
 
         public int Coins { get; set; } = 3;
-
         public bool IsAdmin { get; set; } = false;
+        public string Name { get; set; } = string.Empty;
+
+        #endregion Properties
     }
 }

@@ -4,14 +4,31 @@ namespace NewAuthCustomAccountTestEnv.Models
 {
     public class LeaderboardModel
     {
-        private string _leaderboardUserName;
+        #region Fields
+
         private long _coins;
+        private string _leaderboardUserName;
         private int _position;
 
-        public int Position
+        #endregion Fields
+
+        #region Public Constructors
+
+        public LeaderboardModel(int position, string leaderboardUserName, long coins)
         {
-            get { return _position; }
-            set { _position = value; }
+            Position = position;
+            LeaderboardUserName = leaderboardUserName;
+            Coins = coins;
+        }
+
+        #endregion Public Constructors
+
+        #region Properties
+
+        public long Coins
+        {
+            get { return _coins; }
+            set { _coins = value; }
         }
 
         [DisplayName("User")]
@@ -21,17 +38,12 @@ namespace NewAuthCustomAccountTestEnv.Models
             set { _leaderboardUserName = value; }
         }
 
-        public long Coins
+        public int Position
         {
-            get { return _coins; }
-            set { _coins = value; }
+            get { return _position; }
+            set { _position = value; }
         }
 
-        public LeaderboardModel(int position, string leaderboardUserName, long coins)
-        {
-            Position = position;
-            LeaderboardUserName = leaderboardUserName;
-            Coins = coins;
-        }
+        #endregion Properties
     }
 }
