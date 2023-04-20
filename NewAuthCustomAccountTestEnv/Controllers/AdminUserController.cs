@@ -16,7 +16,11 @@ namespace NewAuthCustomAccountTestEnv.Controllers
 
         public IActionResult UserManagementIndex()
         {
-            return View("UserManagementIndex", ImportUsers());
+            if (User.IsInRole("Admin"))
+            {
+                return View("UserManagementIndex", ImportUsers());
+            }
+            throw new UnauthorizedAccessException();
         }
 
         [HttpPost]
@@ -76,20 +80,20 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserManagerUpdate(string Id, string name, string username, string email, int coins, int afc, bool isadmin)
+        public IActionResult UserManagerUpdate(string Id, string name, string username, string email, int coins, int Failedloginattempts, bool isadmin)
         {
-            UserModel user = new(Id, name, username, email, coins, isadmin, afc);
+            UserModel user = new(Id, name, username, email, coins, isadmin, Failedloginattempts);
             DatabaseConnection.Open();
             using (SqliteCommand fmd = DatabaseConnection.CreateCommand())
             {
-                fmd.CommandText = @"UPDATE AspNetUsers SET Name = $name, Coins = $coins, IsAdmin = $isadmin,  UserName = $username, AccessFailedCount = $afc, Email = $email WHERE id = $id;";
+                fmd.CommandText = @"UPDATE AspNetUsers SET Name = $name, Coins = $coins, IsAdmin = $isadmin,  UserName = $username, AccessFailedCount = $Failedloginattempts, Email = $email WHERE id = $id;";
 
                 fmd.Parameters.AddWithValue("$coins", user.Coins);
                 fmd.Parameters.AddWithValue("$username", user.Username);
                 fmd.Parameters.AddWithValue("$name", user.Name);
                 fmd.Parameters.AddWithValue("$id", user.Id);
                 fmd.Parameters.AddWithValue("$isadmin", user.IsAdmin);
-                fmd.Parameters.AddWithValue("$afc", user.Failedloginattempts);
+                fmd.Parameters.AddWithValue("$Failedloginattempts", user.Failedloginattempts);
                 fmd.Parameters.AddWithValue("$email", user.Email);
 
                 var testvar = fmd.ExecuteNonQuery();

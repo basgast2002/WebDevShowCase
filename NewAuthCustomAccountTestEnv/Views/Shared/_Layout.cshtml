@@ -16,7 +16,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" id="navbarwrapper">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/chicken-leg.png"/> CursedCoins <img src="~/images/storm.png"/></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -56,8 +56,22 @@
             </div>
         </nav>
     </header>
+
+    <div id="loading-div-background" style="display: block">
+        <div id="loading-div" class="ui-corner-all">
+            <div id="loadingbar"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div>
+            
+            <div class="earth">
+                <img src="~/Images/pirateship_loadingScreen.png" style="width:50px;height:50px;" class="loader">
+                <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/globe-512.png" style="width:100%;height:100%;">
+                <h2 style="color:gray;font-weight:normal;">Please wait....</h2>
+            </div>
+            
+        </div>
+    </div>
+
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" onload="loaded">
             @RenderBody()
         </main>
     </div>
@@ -69,7 +83,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
