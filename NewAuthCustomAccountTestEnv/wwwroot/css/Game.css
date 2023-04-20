@@ -67,6 +67,63 @@ html {
     padding: 1em 1em 1em 1em;
 }
 
+.payoutinfo {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    padding: 50px 50px 50px 50px;
+    background: url(/Images/Parchment.png) repeat-x;
+    background-size: 100%;
+}
+
+table.Payout_Table {
+    border: 6px solid #948473;
+    background-color: #FFE3C6;
+    width: 100%;
+    text-align: center;
+}
+
+    table.Payout_Table td, table.Payout_Table th {
+        border: 1px solid #948473;
+        padding: 4px 4px;
+    }
+
+    table.Payout_Table tbody td {
+        font-size: 13px;
+    }
+
+    table.Payout_Table thead {
+        background: #948473;
+        background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+        background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+        background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
+    }
+
+        table.Payout_Table thead th {
+            font-size: 17px;
+            font-weight: bold;
+            color: #F0F0F0;
+            text-align: left;
+            border-left: 2px solid #948473;
+        }
+
+            table.Payout_Table thead th:first-child {
+                border-left: none;
+            }
+
+    table.Payout_Table tfoot {
+        font-size: 16px;
+        font-weight: bold;
+        color: #F0F0F0;
+        background: #948473;
+        background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+        background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+        background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
+    }
+
+        table.Payout_Table tfoot td {
+            font-size: 16px;
+        }
 /* Animation Section */
 .scroller {
     height: 2em;

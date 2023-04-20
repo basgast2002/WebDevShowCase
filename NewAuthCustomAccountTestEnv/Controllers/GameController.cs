@@ -59,7 +59,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             {
                 if (img1 == _images[0])
                 {
-                    payout += 200;
+                    payout += 1000;
                 }
                 if (img1 == _images[1])
                 {
@@ -78,7 +78,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 }
                 if (img1 == _images[3])
                 {
-                    payout += 0;
+                    payout += 50;
                 }
                 if (img1 == _images[4])
                 {
