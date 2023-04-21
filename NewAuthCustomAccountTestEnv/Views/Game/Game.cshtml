@@ -137,13 +137,17 @@
           
         
         
-
-    <form id="gameform"method="post" asp-controller="Game" asp-action="CoinUp">
+            @if (UserManager.GetUserAsync(User).Result.Coins > 0)
+            {
+                
+            
+            <form id="gameform"method="post" asp-controller="Game" asp-action="CoinUp">
        
         <input id="username" type="hidden" name="username" value="@user.UserName"/>
 
             <button id="submitbutton" type="submit" value="Coin Up"><img src="~/Images/pirate-ship.png" alt="sail" /></button>
     </form>
+            }
         <script src="~/js/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
         <script src="~/js/Game.js" asp-append-version="true"></script>
         

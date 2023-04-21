@@ -124,6 +124,10 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 if (user != null)
                 {
                     this._gameValues = GetGameValues();
+                    if (_gameValues.CoinsEarned < 0)
+                    {
+                        return Game();
+                    }
                     if (user.UserName != null)
                     {
                         DbUp(user.UserName, this._gameValues.CoinsEarned);
