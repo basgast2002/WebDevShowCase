@@ -1,6 +1,41 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity;
+@using NewAuthCustomAccountTestEnv.Data;
+@{
     ViewData["Title"] = "Privacy Policy";
+    @inject SignInManager<ApplicationUser> SignInManager
+
+    @inject UserManager<ApplicationUser> UserManager
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div>
+    <div>
+    @{
+        
+        if (SignInManager.IsSignedIn(User))
+        {
+            var user = await UserManager.GetUserAsync(User);
+
+            
+                <h1>Hallo, @user.Name </h1>
+                 if (user.IsAdmin)
+                    {
+                        <a href="#" class="btn" >edit pagina</a> 
+                    }
+                
+            
+
+        }
+        else
+        {
+            <h1>Gwn account maken, is wel veilig</h1>
+        }
+        
+    }
+        </div>
+        <div class="privacyvoorwaarden">
+            <p>dit is een paragraaf over hoe wij jouw email en authenticator app misbruiken op de facebook manier en over hoe kaneelkoekjes lekker zijn maar veel te duur in de normale supermarkt in Nederland.</p>
+            <img src="~/Images/Cursed_Coins_Curse.png"/><h9> accounts worden gewist na elke update, dus ook jouw persoonsgegevens!</h9><img src="~/Images/Cursed_Coins_Gem.png" />
+        </div>
+
+</div>

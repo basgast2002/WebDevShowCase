@@ -1,14 +1,28 @@
-﻿@model IEnumerable<NewAuthCustomAccountTestEnv.Models.UserModel>
+﻿@using Microsoft.AspNetCore.Identity
+@using NewAuthCustomAccountTestEnv.Data;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model IEnumerable<NewAuthCustomAccountTestEnv.Models.UserModel>
 
 @{
     ViewData["Title"] = "UserManagementIndex";
 }
 
 <h1>UserManagementIndex</h1>
-
+<div class="border-1">
 <h2>
     Voelt goed he? Macht.
-</h2>
+
+    </h2>
+    @if (UserManager.GetUserAsync(User).Result.TwoFactorEnabled)
+    {
+        <form method="get" asp-controller="AdminUser" asp-action="AdminPowerLog">
+        <button class="btn btn-danger" type="submit" > Bekijk De Log </button>
+        </form>
+    }
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -54,30 +68,32 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Failedloginattempts)
             </td>
-            <td>
-                
+            
+            <td class="d-xl-table-cell">
+               <div class="d-flex flex-row ms-3"> 
                     <form method="post" asp-controller="AdminUser" asp-action="UserManagerEdit">
 
                         <input type="hidden" name="id" value="@item.Id" />
 
-                        <button id="submitbutton" type="submit" >edit</button>
+                        <button id="submitbutton" type="submit" class="btn btn-secondary ms-1" >edit</button>
                     </form>
 
                     
-                    |
+                    
                     <form method="post" asp-controller="AdminUser" asp-action="UserManagerDetails">
 
                         <input type="hidden" name="id" value="@item.Id" />
 
-                        <button id="submitbutton" type="submit">Details</button>
+                        <button id="submitbutton" type="submit" class="btn btn-info ms-1">Details</button>
                     </form>
-                     |
+                     
                     <form method="post" asp-controller="AdminUser" asp-action="UserManagerDelete">
 
                         <input type="hidden" name="id" value="@item.Id" />
 
-                        <button id="submitbutton" type="submit">Delete</button>
+                        <button id="submitbutton" type="submit" class="btn btn-danger ms-1">Delete</button>
                     </form>
+                    </div>
             </td>
         </tr>
 }

@@ -10,6 +10,7 @@ namespace NewAuthCustomAccountTestEnv.Data
 
         public int Coins { get; set; } = 3;
         public bool IsAdmin { get; set; } = false;
+        public long LBPrivacy { get; set; } = 0;
         public string Name { get; set; } = string.Empty;
 
         #endregion Properties

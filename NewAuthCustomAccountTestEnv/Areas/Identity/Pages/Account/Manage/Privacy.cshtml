@@ -1,0 +1,24 @@
+﻿@page
+@model NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage.PrivacyModel
+@inject UserManager<ApplicationUser> Usermanager;
+@{
+    <div>
+        <h4>Leaderboard visibility:</h4> @{
+                if (Usermanager.GetUserAsync(User).Result.LBPrivacy == 1)
+                {
+                    <h5> visible</h5>
+                }
+                else
+                {
+                    <h5> invisible</h5>
+                }
+                
+            }
+        <form method="post">
+            <button class="btn btn-info" type="submit">Toggle visibility</button>
+        </form>
+    </div>
+
+
+
+}

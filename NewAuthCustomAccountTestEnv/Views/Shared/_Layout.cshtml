@@ -4,7 +4,7 @@
 @inject UserManager<ApplicationUser> UserManager
 
 
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -59,7 +59,10 @@
 
     <div id="loading-div-background" style="display: block">
         <div id="loading-div" class="ui-corner-all">
-            <div id="loadingbar"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div>
+
+            <div id="loadingbar">
+                <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                </div>
             
             <div class="earth">
                 <img src="~/Images/pirateship_loadingScreen.png" style="width:50px;height:50px;" class="loader">
@@ -70,17 +73,36 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="main-content-container container">
         <main role="main" class="pb-3" onload="loaded">
             @RenderBody()
         </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
+       
+    </div> 
+    @if (!SignInManager.IsSignedIn(User))
+        {
+    <section id="cta">
+        <h2>Join our Pirate Crew</h2>
+        <a class="cta-button" asp-area="Identity" asp-page="/Account/Register">Start Your Plundering Journey</a>
+    </section> 
+        }
+    <footer class="border-top">
         <div class="container">
-            &copy; 2023 - NewAuthCustomAccountTestEnv - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <ul>
+            <li><a href="#terms">Terms of Service</a></li>
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#copyright">Copyright</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="https://twitter.com/pirateadventures"><img src="twitter_icon.png" alt="Twitter"></a>
+            <a href="https://facebook.com/pirateadventures"><img src="facebook_icon.png" alt="Facebook"></a>
+            <a href="https://instagram.com/pirateadventures"><img src="instagram_icon.png" alt="Instagram"></a>
+        </div>
+        
+        &copy; 2023 - NewAuthCustomAccountTestEnv - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+   
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js"></script>

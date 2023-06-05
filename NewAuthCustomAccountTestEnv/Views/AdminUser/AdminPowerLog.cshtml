@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using NewAuthCustomAccountTestEnv.Data;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model IEnumerable<NewAuthCustomAccountTestEnv.Models.AdminPowerLogModel>
+
+@{
+    ViewData["Title"] = "AdminPowerLog";
+}
+
+<h1>Admin Power Log</h1>
+<h2>
+    Een log van kwaadaardige acties ondernomen door de minderheid om de meerderheid te onderdrukken. 
+</h2><h6>(niet representatief voor iedere admin!)</h6>
+<table class="table">
+    <thead>
+        <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.Id )
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.ActorId )
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Operation )
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Target )
+        </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Date)
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Operation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Target)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a class="btn-link" asp-area="Identity" asp-action="UserManagementIndex" asp-controller="AdminUser">Back to List</a>
+</div>
