@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NewAuthCustomAccountTestEnv.Data;
 using NewAuthCustomAccountTestEnv.Hubs;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +24,15 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedAccount = true;
     options.User.RequireUniqueEmail = true;
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
+    options.Lockout.MaxFailedAccessAttempts = 10;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(6000000);
+    options.Lockout.AllowedForNewUsers = true;
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -53,13 +57,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-//    app.UseMigrationsEndPoint();
+app.UseMigrationsEndPoint();
 //}
 //else
 //{
-app.UseExceptionHandler("/Home/Error");
+//app.UseExceptionHandler("/Home/Error");
 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-app.UseHsts();
+//app.UseHsts();
 //}
 
 app.UseHttpsRedirection();

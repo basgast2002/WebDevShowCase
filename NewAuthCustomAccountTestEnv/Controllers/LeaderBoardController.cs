@@ -30,14 +30,18 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             DatabaseConnection.Open();
             using (SqliteCommand fmd = DatabaseConnection.CreateCommand())
             {
-                fmd.CommandText = @"SELECT username, coins FROM AspNetUsers ORDER BY coins DESC;";
+                fmd.CommandText = @"SELECT username, coins, name, LBPrivacy FROM AspNetUsers ORDER BY coins DESC;";
                 SqliteDataReader r = fmd.ExecuteReader();
                 while (r.Read())
                 {
-                    string Username = (string)r["username"];
-                    long Coins = (long)r["coins"];
-                    Position++;
-                    ImportedUsers.Add(new LeaderboardModel(Position, Username, Coins));
+                    if ((long)r["LBPrivacy"] == (long)1)
+                    {
+                        string Username = (string)r["username"];
+                        long Coins = (long)r["coins"];
+
+                        Position++;
+                        ImportedUsers.Add(new LeaderboardModel(Position, Username, Coins));
+                    }
                 }
 
                 DatabaseConnection.Close();

@@ -4,11 +4,11 @@
     ViewData["Title"] = "LeaderBoard";
 }
 
-    
-<script src="~/js/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
-<script src="~/js/LeaderBoard.js" asp-append-version="true"></script>
 
-<label id="latest-update-label" >latest sync:</label>
+<script src="~/js/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
+
+
+<label id="latest-update-label">latest sync:</label> <button id="refresh-leaderboard-manually-icon"> refresh icon<i src="refresh"></i></button>
 
 <table class="table">
     <thead>
@@ -28,25 +28,73 @@
     <tbody>
         @if (Model != null)
         {
-
-            
+            int i = 0;
             foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Position)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LeaderboardUserName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Coins)
-                    </td>
-                    
-                </tr>
+                i++;
+                switch (i)
+                {
+                    case 1:
+                        <tr style="color: #ADA200">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeaderboardUserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Coins)
+                            </td>
+
+                        </tr>
+                        break;
+                        case 2:
+                        <tr style="color: #828282">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeaderboardUserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Coins)
+                            </td>
+
+                        </tr>
+                        break;
+                        case 3:
+                        <tr style="color: #AF7046">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeaderboardUserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Coins)
+                            </td>
+
+                        </tr>
+                        break;
+                        default:
+                        <tr style="color :black">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LeaderboardUserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Coins)
+                            </td>
+
+                        </tr>
+                        break;
+                } 
             }
         }
     </tbody>
 </table>
 
 
+<script src="~/js/LeaderBoard.js" asp-append-version="true"></script>

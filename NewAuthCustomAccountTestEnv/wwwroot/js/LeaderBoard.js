@@ -16,3 +16,10 @@ connection.start()
         //wanneer connectie faalt: log de error op console
         console.error(err.toString());
     });
+
+function refresh() {
+    const refreshbutton = document.getElementById("refresh-leaderboard-manually-icon");
+
+    console.log(refreshbutton);
+}
+refresh();

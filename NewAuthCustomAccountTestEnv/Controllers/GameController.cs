@@ -17,8 +17,12 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         private readonly SqliteConnection _databaseConnection = new("Datasource= AuthDb.db");
 
         private readonly string[] _images = {
-            "/Images/Cursed_Coins_Gem.png", "/Images/pirate-ship.png", "/Images/Cursed_Coins_Curse.png",
-            "/Images/storm.png", "/Images/fish.png", "/Images/chicken-leg.png",
+            "/Images/Cursed_Coins_Gem.png",
+            "/Images/pirate-ship.png",
+            "/Images/Cursed_Coins_Curse.png",
+            "/Images/storm.png",
+            "/Images/fish.png",
+            "/Images/chicken-leg.png",
             "/Images/dollar.png" };
 
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -38,64 +42,6 @@ namespace NewAuthCustomAccountTestEnv.Controllers
         #endregion Public Constructors
 
         #region Public Methods
-
-        public int CalculatePayout(string img1, string img2, string img3)
-        {
-            int payout = 0;
-            if (img1 == _images[6])
-            {
-                payout++;
-            }
-            if (img2 == _images[6])
-            {
-                payout++;
-            }
-            if (img3 == _images[6])
-            {
-                payout++;
-            }
-
-            if (img1 == img2 && img2 == img3 && img3 == img1)
-            {
-                if (img1 == _images[0])
-                {
-                    payout += 1000;
-                }
-                if (img1 == _images[1])
-                {
-                    payout += -20;
-                }
-                if (img1 == _images[2])
-                {
-                    if (_userManager.GetUserAsync(User).Result != null)
-                    {
-                        payout += -_userManager.GetUserAsync(User).Result.Coins;
-                    }
-                    else
-                    {
-                        payout = -200;
-                    }
-                }
-                if (img1 == _images[3])
-                {
-                    payout += 50;
-                }
-                if (img1 == _images[4])
-                {
-                    payout += 10;
-                }
-                if (img1 == _images[5])
-                {
-                    payout += 10;
-                }
-                if (img1 == _images[6])
-                {
-                    payout += 2;
-                }
-            }
-
-            return payout;
-        }
 
         [HttpPost]
         [EnableCors("CorsPolicy")]
@@ -124,6 +70,10 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                 if (user != null)
                 {
                     this._gameValues = GetGameValues();
+                    if (_gameValues.CoinsEarned < 0)
+                    {
+                        return Game();
+                    }
                     if (user.UserName != null)
                     {
                         DbUp(user.UserName, this._gameValues.CoinsEarned);
@@ -134,7 +84,7 @@ namespace NewAuthCustomAccountTestEnv.Controllers
             }
             catch (Exception ex)
             {
-                throw new BadHttpRequestException(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -203,7 +153,66 @@ namespace NewAuthCustomAccountTestEnv.Controllers
                         return _images[6];
                 }
             }
-            return "404 - image not found";
+            throw new FileNotFoundException("no image found");
+        }
+
+        private int CalculatePayout(string img1, string img2, string img3)
+        {
+            int payout = 0;
+
+            if (img1 == _images[6] || img1 == _images[5] || img1 == _images[4])
+            {
+                payout++;
+            }
+            if (img2 == _images[6] || img2 == _images[5] || img2 == _images[4])
+            {
+                payout++;
+            }
+            if (img3 == _images[6] || img3 == _images[5] || img3 == _images[4])
+            {
+                payout++;
+            }
+
+            if (img1 == img2 && img2 == img3 && img3 == img1)
+            {
+                if (img1 == _images[0])
+                {
+                    payout += 1000;
+                }
+                if (img1 == _images[1])
+                {
+                    payout += -20;
+                }
+                if (img1 == _images[2])
+                {
+                    if (_userManager.GetUserAsync(User).Result != null)
+                    {
+                        payout += -_userManager.GetUserAsync(User).Result.Coins;
+                    }
+                    else
+                    {
+                        payout = -200;
+                    }
+                }
+                if (img1 == _images[3])
+                {
+                    payout += 50;
+                }
+                if (img1 == _images[4])
+                {
+                    payout += 12;
+                }
+                if (img1 == _images[5])
+                {
+                    payout += 7;
+                }
+                if (img1 == _images[6])
+                {
+                    payout += 2;
+                }
+            }
+
+            return payout;
         }
 
         #endregion Public Methods

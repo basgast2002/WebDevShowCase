@@ -6,7 +6,7 @@ connection.start()
     .catch(function (err) {
         console.error(err.toString());
     });
-var button = document.getElementById("submitbutton");
+const button = document.getElementById("submitbutton");
 button.addEventListener("click", function (event) {
     connection.invoke("UpdateConnectedLeaderboard").catch(function (err) {
         return console.error(err.toString());
@@ -20,13 +20,13 @@ function timeout() {
     }, 2000);
 }
 
-var UserName = document.getElementById("username").value;
+const UserName = document.getElementById("username").value;
 
 button.onload = timeout(button);
 
-var slideBox1 = document.getElementById('scroller1');
-var slideBox2 = document.getElementById('scroller2');
-var slideBox3 = document.getElementById('scroller3');
+const slideBox1 = document.getElementById('scroller1');
+const slideBox2 = document.getElementById('scroller2');
+const slideBox3 = document.getElementById('scroller3');
 
 setTimeout(function () {
     slideBox1.style.display = 'none';
