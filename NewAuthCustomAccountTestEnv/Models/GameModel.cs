@@ -4,7 +4,7 @@
     {
         #region Fields
 
-        private readonly string _default = "/Images/Cursed-Coins-Curse.png";
+        private readonly string _default = "/Images/Cursed-Coins-Gem.png";
 
         #endregion Fields
 
