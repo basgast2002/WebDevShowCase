@@ -4,7 +4,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @model NewAuthCustomAccountTestEnv.Models.GameModel
 @{
-    ViewData["Title"] = "Game" ;
+    ViewData["Title"] = "Adventure Time" ;
 }
 
 <link rel="stylesheet" href="~/css/Game.css" asp-append-version="true" />
@@ -20,8 +20,8 @@
     }
     if (user != null){
         @if (Model != null)
-        {
-            if (Model.CoinsEarned <= 199 && Model.CoinsEarned > 0)
+        { <div class="game-layout">
+            @if (Model.CoinsEarned <= 999 && Model.CoinsEarned > 0)
             {
                 <div id="payoutbanner" class="coinsearnedbanner"><h1>Je hebt: @Model.CoinsEarned <img src="~/Images/dollar.png"/> verdiend!</h1></div>
             }
@@ -137,7 +137,8 @@
           
         
         
-            @if (UserManager.GetUserAsync(User).Result.Coins > 0)
+            @{
+                if (UserManager.GetUserAsync(User).Result.Coins > 0)
             {
                 
             
@@ -148,6 +149,8 @@
             <button id="submitbutton" type="submit" value="Coin Up"><img src="~/Images/pirate-ship.png" alt="sail" /></button>
     </form>
             }
+            }
+            </div>
         <script src="~/js/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
         <script src="~/js/Game.js" asp-append-version="true"></script>
         

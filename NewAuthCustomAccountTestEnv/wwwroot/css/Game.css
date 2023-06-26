@@ -2,6 +2,14 @@
     display: flex;
 }
 
+.game-layout {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .door-container {
     display: flex;
 }
@@ -44,8 +52,6 @@ html {
     flex-direction: column;
     align-items: center;
     align-content: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
     padding: 1em 1em 1em 1em;
     height: 300px;
 }
@@ -155,5 +161,16 @@ table.Payout_Table {
 
     100% {
         display: none;
+    }
+}
+
+@media (max-width: 800px) {
+    .payoutinfo {
+        position: relative;
+        top: 20%;
+        left: 5%;
+        padding: 50px 50px 50px 50px;
+        background: url(/Images/Parchment.png) repeat-x;
+        background-size: 100%;
     }
 }

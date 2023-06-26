@@ -4,14 +4,14 @@ connection.start()
         console.log("Connection started");
     })
     .catch(function (err) {
-        console.error(err.toString());
+        //console.error(err.toString());
     });
 const button = document.getElementById("submitbutton");
 button.addEventListener("click", function (event) {
     connection.invoke("UpdateConnectedLeaderboard").catch(function (err) {
         return console.error(err.toString());
     });
-    console.log("button pressed");
+    // console.log("button pressed");
 });
 function timeout() {
     button.disabled = true;
