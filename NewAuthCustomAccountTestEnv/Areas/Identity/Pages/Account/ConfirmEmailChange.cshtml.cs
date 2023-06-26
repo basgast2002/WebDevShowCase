@@ -2,22 +2,25 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using NewAuthCustomAccountTestEnv.Data;
+using System.Text;
 
 namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        #region Fields
+
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public ConfirmEmailChangeModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
@@ -25,12 +28,20 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
             _signInManager = signInManager;
         }
 
+        #endregion Public Constructors
+
+        #region Properties
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
+
+        #endregion Properties
+
+        #region Public Methods
 
         public async Task<IActionResult> OnGetAsync(string userId, string email, string code)
         {
@@ -66,5 +77,7 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
             StatusMessage = "Thank you for confirming your email change.";
             return Page();
         }
+
+        #endregion Public Methods
     }
 }

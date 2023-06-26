@@ -1,19 +1,22 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using NewAuthCustomAccountTestEnv.Data;
 
 namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        #region Fields
+
         private readonly ILogger<PersonalDataModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public PersonalDataModel(
             UserManager<ApplicationUser> userManager,
@@ -22,6 +25,10 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _logger = logger;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public async Task<IActionResult> OnGet()
         {
@@ -33,5 +40,7 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
 
             return Page();
         }
+
+        #endregion Public Methods
     }
 }

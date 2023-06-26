@@ -2,22 +2,25 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using NewAuthCustomAccountTestEnv.Data;
+using System.ComponentModel.DataAnnotations;
+
 namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
 {
     public class LoginWithRecoveryCodeModel : PageModel
     {
+        #region Fields
+
+        private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public LoginWithRecoveryCodeModel(
             SignInManager<ApplicationUser> signInManager,
@@ -28,6 +31,10 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
             _userManager = userManager;
             _logger = logger;
         }
+
+        #endregion Public Constructors
+
+        #region Properties
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -42,22 +49,9 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
         /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public class InputModel
-        {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [BindProperty]
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Recovery Code")]
-            public string RecoveryCode { get; set; }
-        }
+        #endregion Properties
+
+        #region Public Methods
 
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
@@ -109,5 +103,32 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account
                 return Page();
             }
         }
+
+        #endregion Public Methods
+
+        #region Classes
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        public class InputModel
+        {
+            #region Properties
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [BindProperty]
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Recovery Code")]
+            public string RecoveryCode { get; set; }
+
+            #endregion Properties
+        }
+
+        #endregion Classes
     }
 }

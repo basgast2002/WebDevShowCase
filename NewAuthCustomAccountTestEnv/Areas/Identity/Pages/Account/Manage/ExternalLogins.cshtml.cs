@@ -2,11 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +12,15 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        #region Fields
+
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserStore<ApplicationUser> _userStore;
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public ExternalLoginsModel(
             UserManager<ApplicationUser> userManager,
@@ -30,6 +31,10 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
             _userStore = userStore;
         }
+
+        #endregion Public Constructors
+
+        #region Properties
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -56,6 +61,10 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
+        #endregion Properties
+
+        #region Public Methods
+
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -77,37 +86,6 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
 
             ShowRemoveButton = passwordHash != null || CurrentLogins.Count > 1;
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostRemoveLoginAsync(string loginProvider, string providerKey)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            var result = await _userManager.RemoveLoginAsync(user, loginProvider, providerKey);
-            if (!result.Succeeded)
-            {
-                StatusMessage = "The external login was not removed.";
-                return RedirectToPage();
-            }
-
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "The external login was removed.";
-            return RedirectToPage();
-        }
-
-        public async Task<IActionResult> OnPostLinkLoginAsync(string provider)
-        {
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            // Request a redirect to the external login provider to link a login for the current user
-            var redirectUrl = Url.Page("./ExternalLogins", pageHandler: "LinkLoginCallback");
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, _userManager.GetUserId(User));
-            return new ChallengeResult(provider, properties);
         }
 
         public async Task<IActionResult> OnGetLinkLoginCallbackAsync()
@@ -138,5 +116,38 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             StatusMessage = "The external login was added.";
             return RedirectToPage();
         }
+
+        public async Task<IActionResult> OnPostLinkLoginAsync(string provider)
+        {
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            // Request a redirect to the external login provider to link a login for the current user
+            var redirectUrl = Url.Page("./ExternalLogins", pageHandler: "LinkLoginCallback");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, _userManager.GetUserId(User));
+            return new ChallengeResult(provider, properties);
+        }
+
+        public async Task<IActionResult> OnPostRemoveLoginAsync(string loginProvider, string providerKey)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var result = await _userManager.RemoveLoginAsync(user, loginProvider, providerKey);
+            if (!result.Succeeded)
+            {
+                StatusMessage = "The external login was not removed.";
+                return RedirectToPage();
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+            StatusMessage = "The external login was removed.";
+            return RedirectToPage();
+        }
+
+        #endregion Public Methods
     }
 }

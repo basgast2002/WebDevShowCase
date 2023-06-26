@@ -2,25 +2,29 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using NewAuthCustomAccountTestEnv.Data;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
 {
     public class EmailModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        #region Fields
+
         private readonly IEmailSender _emailSender;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
@@ -32,11 +36,22 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             _emailSender = emailSender;
         }
 
+        #endregion Public Constructors
+
+        #region Properties
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Email { get; set; }
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        [BindProperty]
+        public InputModel Input { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -51,41 +66,9 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [BindProperty]
-        public InputModel Input { get; set; }
+        #endregion Properties
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public class InputModel
-        {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [EmailAddress]
-            [Display(Name = "New email")]
-            public string NewEmail { get; set; }
-        }
-
-        private async Task LoadAsync(ApplicationUser user)
-        {
-            var email = await _userManager.GetEmailAsync(user);
-            Email = email;
-
-            Input = new InputModel
-            {
-                NewEmail = email,
-            };
-
-            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
-        }
+        #region Public Methods
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -168,5 +151,48 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private async Task LoadAsync(ApplicationUser user)
+        {
+            var email = await _userManager.GetEmailAsync(user);
+            Email = email;
+
+            Input = new InputModel
+            {
+                NewEmail = email,
+            };
+
+            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+        }
+
+        #endregion Private Methods
+
+        #region Classes
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        public class InputModel
+        {
+            #region Properties
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [EmailAddress]
+            [Display(Name = "New email")]
+            public string NewEmail { get; set; }
+
+            #endregion Properties
+        }
+
+        #endregion Classes
     }
 }

@@ -2,20 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using NewAuthCustomAccountTestEnv.Data;
 
 namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
 {
     public class Disable2faModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        #region Fields
+
         private readonly ILogger<Disable2faModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public Disable2faModel(
             UserManager<ApplicationUser> userManager,
@@ -25,12 +28,20 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
 
+        #endregion Public Constructors
+
+        #region Properties
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
+
+        #endregion Properties
+
+        #region Public Methods
 
         public async Task<IActionResult> OnGet()
         {
@@ -66,5 +77,7 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             StatusMessage = "2fa has been disabled. You can reenable 2fa when you setup an authenticator app";
             return RedirectToPage("./TwoFactorAuthentication");
         }
+
+        #endregion Public Methods
     }
 }

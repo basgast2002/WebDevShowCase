@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NewAuthCustomAccountTestEnv.Data;
 using NewAuthCustomAccountTestEnv.Hubs;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

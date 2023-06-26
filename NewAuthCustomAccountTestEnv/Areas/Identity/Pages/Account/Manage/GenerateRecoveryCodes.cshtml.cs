@@ -2,21 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using NewAuthCustomAccountTestEnv.Data;
 
 namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
 {
     public class GenerateRecoveryCodesModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        #region Fields
+
         private readonly ILogger<GenerateRecoveryCodesModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public GenerateRecoveryCodesModel(
             UserManager<ApplicationUser> userManager,
@@ -25,6 +27,10 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _logger = logger;
         }
+
+        #endregion Public Constructors
+
+        #region Properties
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -39,6 +45,10 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
         /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
+
+        #endregion Properties
+
+        #region Public Methods
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -79,5 +89,7 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             StatusMessage = "You have generated new recovery codes.";
             return RedirectToPage("./ShowRecoveryCodes");
         }
+
+        #endregion Public Methods
     }
 }
