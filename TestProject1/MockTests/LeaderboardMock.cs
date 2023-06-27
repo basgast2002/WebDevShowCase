@@ -12,17 +12,16 @@ namespace testProject1.MockTests
         [Fact]
         public void Create_ShouldReturnAllUsers()
         {
-            // Arrange
-            // Er moet getest worden of de methode GetUsers in de klasse UserService de
-            // (juiste) gebruikers returned. Deze heeft echter een afhankelijkheid: IUserRepository
-            // Mock IUserRepository, zodat de test uitgevoerd kan worden.
-
             var mockUserRepository = new Mock<ILeaderBoardInterface>();
             mockUserRepository.Setup(repo => repo.Create())
                 .Returns(new List<LeaderboardModel>
                 {
                     new LeaderboardModel ( 1, "appleman", (long)10),
-                    new LeaderboardModel( 2, "ppoo", (long)11)
+                    new LeaderboardModel( 2, "ppoo", (long)9),
+                    new LeaderboardModel ( 3, "aco", (long)8),
+                    new LeaderboardModel( 4, "ato", (long)7),
+                    new LeaderboardModel ( 5, "busman", (long)6),
+                    new LeaderboardModel( 6, "Jayden", (long)6)
                 });
 
             var userService = new LeaderboardService(mockUserRepository.Object);
@@ -31,12 +30,33 @@ namespace testProject1.MockTests
             var result = userService.Create();
 
             // Assert
-            Assert.Equal(2, result.Count());
-            //Assert.Contains(result, u => u.LeaderboardUserName == "appleman");
-            //Assert.Contains(result, u => u.LeaderboardUserName == "ppoo");
+            Assert.Equal(6, result.Count());
             Assert.Collection(result,
                                u => Assert.Equal("appleman", u.LeaderboardUserName),
-                               u => Assert.Equal("ppoo", u.LeaderboardUserName));
+                               u => Assert.Equal("ppoo", u.LeaderboardUserName),
+                               u => Assert.Equal("aco", u.LeaderboardUserName),
+                               u => Assert.Equal("ato", u.LeaderboardUserName),
+                               u => Assert.Equal("busman", u.LeaderboardUserName),
+                               u => Assert.Equal("Jayden", u.LeaderboardUserName)
+                               );
+
+            Assert.Collection(result.OrderByDescending(c => c.Coins),
+
+                               u => Assert.Equal("appleman", u.LeaderboardUserName),
+                               u => Assert.Equal("ppoo", u.LeaderboardUserName),
+                               u => Assert.Equal("aco", u.LeaderboardUserName),
+                               u => Assert.Equal("ato", u.LeaderboardUserName),
+                               u => Assert.Equal("busman", u.LeaderboardUserName),
+                               u => Assert.Equal("Jayden", u.LeaderboardUserName)
+                               );
+            Assert.Collection(result.OrderBy(c => c.Position),
+                               u => Assert.Equal("appleman", u.LeaderboardUserName),
+                               u => Assert.Equal("ppoo", u.LeaderboardUserName),
+                               u => Assert.Equal("aco", u.LeaderboardUserName),
+                               u => Assert.Equal("ato", u.LeaderboardUserName),
+                               u => Assert.Equal("busman", u.LeaderboardUserName),
+                               u => Assert.Equal("Jayden", u.LeaderboardUserName)
+                               );
         }
 
         #endregion Public Methods
