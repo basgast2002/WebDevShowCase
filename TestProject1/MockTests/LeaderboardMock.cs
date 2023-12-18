@@ -49,7 +49,7 @@ namespace testProject1.MockTests
                                u => Assert.Equal("busman", u.LeaderboardUserName),
                                u => Assert.Equal("Jayden", u.LeaderboardUserName)
                                );
-            Assert.Collection(result.OrderBy(c => c.Position),
+            Assert.Collection(result.OrderBy(p => p.Position),
                                u => Assert.Equal("appleman", u.LeaderboardUserName),
                                u => Assert.Equal("ppoo", u.LeaderboardUserName),
                                u => Assert.Equal("aco", u.LeaderboardUserName),

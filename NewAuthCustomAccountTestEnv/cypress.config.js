@@ -11,7 +11,17 @@ module.exports = defineConfig({
 
         setupNodeEvents(on, config) {
             // implement node event listeners here
-            config.experimentalStudio = true;
         },
+        "experimentalRunAllSpecs": true,
+        "experimentalOriginDependencies": false,
     },
+    "experimentalCspAllowList": true,
+    "experimentalFetchPolyfill": true,
+    "experimentalInteractiveRunEvents": true,
+    "experimentalMemoryManagement": true,
+    "experimentalModifyObstructiveThirdPartyCode": true,
+
+    "experimentalSourceRewriting": true,
+    "experimentalStudio": true,
+    "experimentalWebKitSupport": true,
 });

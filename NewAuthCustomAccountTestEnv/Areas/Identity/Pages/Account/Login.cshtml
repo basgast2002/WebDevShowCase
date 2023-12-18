@@ -4,9 +4,23 @@
 @{
     ViewData["Title"] = "Set Sail";
     ViewData["icon"] = "";
+
 }
 
-<h1>@ViewData["Title"]</h1>
+@{
+    string catApiResponse = ViewBag.cat;
+}
+
+@if (!string.IsNullOrEmpty(catApiResponse))
+{
+    //<p>API Response: @catApiResponse</p>
+} else
+{
+    //<p> fout! @catApiResponse </p>
+}
+
+
+<h1>@ViewData["title"]</h1>
 <div class="row">
     <div class="col-md-4">
         <section>
@@ -49,7 +63,7 @@
         <section>
             <h3>Een zeer entertainend gamepie, gwn n account maken joh.</h3>
             <p>dit is een paragraaf over Cursed Coins. hier staat alleen maar nutteloze dingen, zoals. random info over de applicatie, random woorden, kattenplaatjes en hele mooie admin login info. (disclaimer: niet waar).</p>
-            
+            <img src="@ViewData["caturl"]" alt="cat." />
         </section>
     </div>
 </div>
