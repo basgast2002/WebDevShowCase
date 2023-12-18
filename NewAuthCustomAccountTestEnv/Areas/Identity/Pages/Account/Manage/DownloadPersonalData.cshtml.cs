@@ -2,24 +2,24 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using NewAuthCustomAccountTestEnv.Data;
+using System.Text.Json;
 
 namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        #region Fields
+
         private readonly ILogger<DownloadPersonalDataModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        #endregion Fields
+
+        #region Public Constructors
 
         public DownloadPersonalDataModel(
             UserManager<ApplicationUser> userManager,
@@ -28,6 +28,10 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _logger = logger;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public IActionResult OnGet()
         {
@@ -64,5 +68,7 @@ namespace NewAuthCustomAccountTestEnv.Areas.Identity.Pages.Account.Manage
             Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalData.json");
             return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");
         }
+
+        #endregion Public Methods
     }
 }

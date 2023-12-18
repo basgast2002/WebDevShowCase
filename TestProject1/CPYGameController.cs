@@ -1,6 +1,6 @@
 ﻿namespace testProject1
 {
-    internal class CPYGameController
+    public class CPYGameController
     {
         #region Fields
 

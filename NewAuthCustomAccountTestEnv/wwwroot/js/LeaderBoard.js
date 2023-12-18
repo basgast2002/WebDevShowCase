@@ -16,7 +16,13 @@ connection.start()
         //wanneer connectie faalt: log de error op console
         console.error(err.toString());
     });
-
+const button = document.getElementById("refreshbutton");
+button.addEventListener("click", function (event) {
+    connection.invoke("UpdateConnectedLeaderboard").catch(function (err) {
+        return console.error(err.toString());
+    });
+    // console.log("button pressed");
+});
 function refresh() {
     const refreshbutton = document.getElementById("refresh-leaderboard-manually-icon");
 
